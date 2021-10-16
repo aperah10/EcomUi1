@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uiecom/AFile/Scr/Address/ShowAddress.dart';
 import 'package:uiecom/AFile/Scr/Cart/CartPage.dart';
 import 'package:uiecom/AFile/Scr/Order/Order.dart';
 import 'package:uiecom/AFile/Scr/Profile/ShowProdile.dart';
@@ -35,18 +36,11 @@ class _MyDrawerListState extends State<MyDrawerList> {
             title: 'Cart Scr',
             icon: Icons.price_check,
             submitMethod: () => CartScr()),
+
         CusDrawerList(
-            title: 'Profile Show',
+            title: 'Address',
             icon: Icons.price_check,
-            submitMethod: () => ShowProfileScr()),
-        CusDrawerList(
-            title: 'Check Out',
-            icon: Icons.price_check,
-            submitMethod: () => CheckOutPage()),
-        CusDrawerList(
-            title: 'Cart Screen ',
-            icon: Icons.shopping_bag,
-            submitMethod: () => CartPage()),
+            submitMethod: () => AddressShowScr()),
       ])),
     );
   }

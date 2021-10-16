@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:uiecom/AFile/Scr/Address/EditAddress.dart';
+import 'package:uiecom/AFile/Scr/Address/ShowAddress.dart';
+import 'package:uiecom/AFile/Scr/Address/UpdAddress.dart';
 import 'package:uiecom/AFile/Scr/Profile/EditProfile.dart';
 import 'package:uiecom/AFile/Scr/Profile/ShowProdile.dart';
 import 'package:uiecom/Fortend/Screen/Authr_Scr/HomeScr.dart';
@@ -17,4 +20,7 @@ final Map<String, WidgetBuilder> routes = {
   CartScr.routeName: (ctx) => CartScr(),
   ShowProfileScr.routeName: (ctx) => ShowProfileScr(),
   EditProfileScr.routeName: (ctx) => EditProfileScr(),
+  AddressShowScr.routeName: (ctx) => AddressShowScr(),
+  AddressPostScr.routeName: (ctx) => AddressPostScr(),
+  AddressUpScr.routeName: (ctx) => AddressUpScr(),
 };
