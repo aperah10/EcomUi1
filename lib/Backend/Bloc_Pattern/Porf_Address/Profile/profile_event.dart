@@ -17,16 +17,19 @@ class FetchProfileEvent extends ProfileEvent {
 /*                          // ! PROFILE SAVE BUTTON                          */
 /* -------------------------------------------------------------------------- */
 
-class ProfileBtnEvent extends ProfileEvent {
-  final String? fullname;
+class ProfileSaveButtonEvent extends ProfileEvent {
+  final String fullname;
   final String? email;
   final String? pic;
   final String? gender;
 
-  ProfileBtnEvent({this.fullname, this.email, this.gender, this.pic});
+  ProfileSaveButtonEvent(
+      {required this.fullname, this.email, this.gender, this.pic});
 
   @override
-  // List<Object> get props => [fullname, email, gender, pic];
+  List<Object> get props => [
+        fullname,
+      ];
 
   @override
   String toString() => 'ProfileBtn { username: $fullname, password: $email }';

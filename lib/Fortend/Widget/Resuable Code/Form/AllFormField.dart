@@ -45,6 +45,7 @@ class _FieldFState extends State<EditFormFields> {
         controller: widget.controller,
         keyboardType: widget.inputType,
         minLines: 1,
+        onSaved: widget.savedValue,
         validator: widget.formValidator,
         autofocus: false,
         decoration: InputDecoration(
@@ -157,7 +158,7 @@ class _QuanFieldState extends State<QuanField> {
         decoration: InputDecoration(
           labelText: widget.labelText,
           suffixIcon: PopupMenuButton(
-            initialValue: 1.toString(),
+            // initialValue: 1.toString(),
             icon: const Icon(Icons.arrow_drop_down),
             onSelected: widget.onData,
             itemBuilder: widget.buildMethod,

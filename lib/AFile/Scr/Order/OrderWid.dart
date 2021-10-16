@@ -239,7 +239,9 @@ class DeliveyOption extends StatelessWidget {
 
 // ! SAVE BTN OPTION
 class PlaceBtn extends StatelessWidget {
-  const PlaceBtn({Key? key}) : super(key: key);
+  String btnName;
+  dynamic submitMethod;
+  PlaceBtn(this.btnName, {Key? key, this.submitMethod}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -247,13 +249,10 @@ class PlaceBtn extends StatelessWidget {
       child: Container(
         width: double.infinity,
         margin: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-        child: RaisedButton(
-          onPressed: () {
-            /*Navigator.of(context).push(new MaterialPageRoute(
-                          builder: (context) => OrderPlacePage()));*/
-          },
+        child: MaterialButton(
+          onPressed: submitMethod,
           child: Text(
-            "Place Order",
+            btnName,
             style: TextStyle(
                 color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold),
           ),

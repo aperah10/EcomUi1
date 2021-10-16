@@ -16,7 +16,7 @@ class ProfileDataRespo {
 
       if (res.statusCode == 200) {
         var datar = jsonDecode(res.body);
-        print('datatr $datar');
+        // print('datatr $datar');
         MainProfile mpt = MainProfile.fromJson({'profileData': datar});
 
         List<Profile> profileData = mpt.profileData;
@@ -38,7 +38,10 @@ class ProfileDataRespo {
   /* -------------------------------------------------------------------------- */
 
   Future<List<Profile>> addProfileData(
-      {String? fullname, String? email, String? pic, String? gender}) async {
+      {required String fullname,
+      String? email,
+      String? pic,
+      String? gender}) async {
     String baseUrl = 'https://rahul10apes.pythonanywhere.com/profile/';
 
     try {
@@ -56,7 +59,7 @@ class ProfileDataRespo {
       var data = json.decode(res.body) as Map;
       // print('this is data in post method :- $data');
       // print(res.body);
-      // print('CART POST MEHTOD Statuc Code  :-  ${res.statusCode}');
+      // print(' Statuc Code  :-  ${res.statusCode}');
 
       if (res.statusCode == 200) {
         return getProfileData();

@@ -2,10 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:uiecom/AFile/Scr/Order/OrderWid.dart';
 import 'package:uiecom/AFile/Scr/Profile/ShowProdile.dart';
 import 'package:uiecom/Backend/Bloc_Pattern/Porf_Address/Profile/profile_bloc.dart';
+import 'package:uiecom/Fortend/Widget/Resuable%20Code/Drop_Down_C.dart';
 import 'package:uiecom/Fortend/Widget/Resuable%20Code/Form/AllFormField.dart';
 import 'package:uiecom/Fortend/Widget/Resuable%20Code/Form/AllFormValidation.dart';
+import 'package:uiecom/ZExtra/DataList.dart';
 
 class EditProfileScr extends StatelessWidget {
   static const routeName = '/edit-profile';
@@ -31,7 +34,6 @@ class EditProfileScr extends StatelessWidget {
         child:
             BlocBuilder<ProfileBloc, ProfileState>(builder: (context, state) {
           if (state is ProfileLoadedState) {
-            print(state.profileData);
             return ProfileForm(profState: state.profileData);
           }
 
@@ -55,6 +57,11 @@ class _ProfileFormState extends State<ProfileForm> {
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final genderController = TextEditingController();
+  var genderData = [
+    "Male",
+    "Female",
+    "Other",
+  ];
 
   _profileBtn() async {
     var isvalid = formKey.currentState!.validate();
@@ -64,11 +71,11 @@ class _ProfileFormState extends State<ProfileForm> {
     formKey.currentState!.save();
 
     var isToken = BlocProvider.of<ProfileBloc>(context).add(
-      ProfileBtnEvent(
-        fullname: nameController.text.isNotEmpty || nameController.text != null
+      ProfileSaveButtonEvent(
+        fullname: nameController.text.isNotEmpty
             ? nameController.text
             : widget.profState[0].fullname,
-        email: emailController.text.isNotEmpty || emailController.text != null
+        email: emailController.text.isNotEmpty
             ? emailController.text
             : widget.profState[0].email,
         gender: genderController.text.isNotEmpty
@@ -90,113 +97,83 @@ class _ProfileFormState extends State<ProfileForm> {
     final formvalid = Provider.of<AllFormValdation>(context);
 
     return Container(
-        padding: EdgeInsets.only(left: 16, top: 25, right: 16),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Form(
-            key: formKey,
-            child: ListView(
-              children: [
-                //  !  staring list item
-                Text(
-                  "Edit Profile",
-                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
-                ),
-                SizedBox(
-                  height: 15,
-                ),
+        padding: EdgeInsets.only(left: 16, top: 20, right: 16),
+        child: Form(
+          key: formKey,
+          child: Column(
+            children: [
+              //  !  staring list item
+              Text(
+                "Edit Profile",
+                style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
+              ),
+              SizedBox(
+                height: 15,
+              ),
 
-                // ! 2. AVATOR CIRCLE FOR PIC
+              // ! 2. AVATOR CIRCLE FOR PIC
 
-                //  ! AVATAR PIC
-                AviPic(),
+              //  ! AVATAR PIC
+              AviPic(),
 
-                // ! Avitar Pic,
+              // ! Avitar Pic,
 
-                SizedBox(
-                  height: 35,
-                ),
+              SizedBox(
+                height: 35,
+              ),
 
-                //  ! FORM FILED WIDGET
-                EditFormFields(
-                  formValidator: (String? val) => formvalid.reqValid(val),
-                  initValue: widget.profState[0].fullname.isNotEmpty
-                      ? widget.profState[0].fullname
-                      : '',
-                  inputType: TextInputType.name,
-                  placeholder: 'Enter the Name',
-                  savedValue: (String? newValue) {
-                    // ! DROP DOWN MENU  dropdownValue
-                    setState(() {
-                      nameController.text = newValue!;
-                    });
-                  },
-                ),
-                // !EMAIL FILE D
-                EditFormFields(
-                  formValidator: (String? val) => formvalid.emailVal2(val),
-                  initValue: widget.profState[0].email.toString().isNotEmpty ||
-                          widget.profState[0].email != null
-                      ? widget.profState[0].email
-                      : '',
-                  inputType: TextInputType.emailAddress,
-                  // controller: emailController,
-                  placeholder: 'Enter the Email',
-                  brd: false,
-                  savedValue: (String? newValue) {
-                    // ! DROP DOWN MENU  dropdownValue
-                    setState(() {
-                      emailController.text = newValue!;
-                    });
-                  },
-                ),
+              //  ! FORM FILED WIDGET
+              EditFormFields(
+                formValidator: (String? val) => formvalid.reqValid(val),
+                initValue: widget.profState[0].fullname.isNotEmpty
+                    ? widget.profState[0].fullname
+                    : '',
+                inputType: TextInputType.name,
+                placeholder: 'Enter the Name',
+                savedValue: (String? newValue) {
+                  setState(() {
+                    nameController.text = newValue!;
+                  });
+                },
+              ),
+              // !EMAIL FILE D
+              EditFormFields(
+                formValidator: (String? val) => formvalid.emailVal2(val),
+                initValue: widget.profState[0].email.isNotEmpty
+                    ? widget.profState[0].email
+                    : '',
+                inputType: TextInputType.emailAddress,
+                placeholder: 'Enter the Email',
+                brd: false,
+                savedValue: (String? newValue) {
+                  setState(() {
+                    emailController.text = newValue!;
+                  });
+                },
+              ),
 
-                // DropDownBtn(
-                //   pageName: 'Gender',
-                //   dName: widget.profState[0].gender.toString().isNotEmpty
-                //       ? widget.profState[0].gender
-                //       : 'Gender',
-                //   listData: AllListData.genderData,
-                //   listController: genderController,
-                //   currentItem: widget.profState[0].gender.toString().isNotEmpty
-                //       ? widget.profState[0].gender
-                //       : null,
-                //   // // onValue:   ,
-                // ),
+              DropDownBtn(
+                pageName: 'Gender',
+                dName: widget.profState[0].gender.toString().isNotEmpty
+                    ? widget.profState[0].gender
+                    : 'Gender',
+                listData: AllListData.genderData,
+                listController: genderController,
+                currentItem: widget.profState[0].gender.toString().isNotEmpty
+                    ? widget.profState[0].gender
+                    : null,
+                // // onValue:   ,
+              ),
 
-                // ! END FORM FIELD PAGE
+              // // ! END FORM FIELD PAGE
 
-                Padding(
+              Padding(
                   padding: EdgeInsets.only(top: 30.0, bottom: 0.0),
                   child: widget.profState is ProfileLoadingState
                       ? CupertinoActivityIndicator()
-                      : InkWell(
-                          child: Text(
-                            'Save',
-                            style: TextStyle(color: Colors.white, fontSize: 16),
-                          ),
-                          onTap: _profileBtn,
-                        ),
-                ),
-              ],
-            ),
+                      : PlaceBtn('Save', submitMethod: _profileBtn)),
+            ],
           ),
         ));
   }
-
-  // Widget saveBtn() {
-  //   return Container(
-  //     width: double.infinity,
-  //     margin: EdgeInsets.only(left: 48, right: 48),
-  //     child: MaterialButton(
-  //       color: Colors.blue,
-  //       textColor: Colors.white,
-  //       onPressed: () {},
-  //       child: Text(
-  //         "Save",
-  //         style: TextStyle(color: Colors.white, fontSize: 16),
-  //       ),
-  //     ),
-  //   );
-  // }
 }

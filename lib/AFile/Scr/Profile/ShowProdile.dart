@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:uiecom/AFile/Scr/Order/OrderWid.dart';
 import 'package:uiecom/AFile/Scr/Profile/EditProfile.dart';
 import 'package:uiecom/Backend/Bloc_Pattern/Porf_Address/Profile/profile_bloc.dart';
 import 'package:uiecom/Fortend/Widget/Resuable%20Code/Form/AllFormField.dart';
@@ -94,20 +95,20 @@ class ProfileS extends StatelessWidget {
                 profState[0].fullname != null ? profState[0].fullname : 'Name',
           ),
           ShowFormFields(
-            placeholder:
-                profState[0].email != null ? profState[0].email : 'Email',
+            placeholder: profState[0].email,
           ),
           ShowFormFields(
             placeholder:
                 profState[0].gender != null ? profState[0].gender : 'Gender',
           ),
           // ! btn for update
-          InkWell(
-              onTap: () {
-                Navigator.of(context)
-                    .pushReplacementNamed(EditProfileScr.routeName);
-              },
-              child: Text('Edit'))
+          Container(
+            height: 50,
+            child: PlaceBtn("Edit", submitMethod: () {
+              Navigator.of(context)
+                  .pushReplacementNamed(EditProfileScr.routeName);
+            }),
+          )
         ],
       ),
     );

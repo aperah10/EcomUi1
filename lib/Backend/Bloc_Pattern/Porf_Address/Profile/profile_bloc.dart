@@ -27,7 +27,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       try {
         List<Profile> profileData = await profRespo.getProfileData();
 
-        print('profData:- $profileData ');
+        // print('profData:- $profileData ');
 
         yield ProfileLoadedState(
           profileData: profileData,
@@ -40,13 +40,13 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     /* -------------------------------------------------------------------------- */
     /*                  // ! PROFILE ADDED , ADDING  , DELETING BLOC                 */
     /* -------------------------------------------------------------------------- */
-    if (event is ProfileBtnEvent) {
-      List<Profile> profList = await profRespo.addProfileData(
+    if (event is ProfileSaveButtonEvent) {
+      // print('ProdAddedCartEvent Happend');
+      List<Profile> prodList = await profRespo.addProfileData(
           fullname: event.fullname,
           email: event.email,
           pic: event.pic,
           gender: event.gender);
-      print('bloc $profList');
 
       yield ProfileSuccessState();
     }

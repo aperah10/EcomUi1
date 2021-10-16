@@ -47,7 +47,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                 ),
                 flex: 90,
               ),
-              PlaceBtn()
+              PlaceBtn("Place Order")
             ],
           );
         }),

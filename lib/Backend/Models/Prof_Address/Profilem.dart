@@ -26,30 +26,45 @@ class MainProfile {
 /*                 // orc 1.  PROFILE PAGE MODEL  IN WITHOUT LIST                */
 /* -------------------------------------------------------------------------- */
 
+/* -------------------------------------------------------------------------- */
+/*                 // orc 1.  PROFILE PAGE MODEL  IN WITHOUT LIST                */
+/* -------------------------------------------------------------------------- */
+Profile profileFromJson(String str) => Profile.fromJson(json.decode(str));
+
+String profileToJson(Profile data) => json.encode(data.toJson());
+
 class Profile {
   Profile({
+    this.id,
     this.fullname,
     this.email,
-    this.pic,
     this.gender,
+    this.pic,
+    this.uplod,
   });
 
+  String? id;
   String? fullname;
   String? email;
-  dynamic pic;
   dynamic gender;
+  dynamic pic;
+  String? uplod;
 
   factory Profile.fromJson(Map<String, dynamic> json) => Profile(
+        id: json["id"],
         fullname: json["fullname"],
         email: json["email"],
-        pic: json["pic"],
         gender: json["gender"],
+        pic: json["pic"],
+        uplod: json["uplod"],
       );
 
   Map<String, dynamic> toJson() => {
+        "id": id,
         "fullname": fullname,
         "email": email,
-        "pic": pic,
         "gender": gender,
+        "pic": pic,
+        "uplod": uplod,
       };
 }
