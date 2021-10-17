@@ -140,4 +140,35 @@ class AddressDataRespo {
       return Future.error("Error Fetching Data !");
     }
   }
+
+  /* -------------------------------------------------------------------------- */
+  /*                          // ! Address DELETE                          */
+  /* -------------------------------------------------------------------------- */
+  Future<List<Address>> adrDel({
+    required String adrId,
+  }) async {
+    String baseUrl = 'https://rahul10apes.pythonanywhere.com/addressdel/';
+    var token = storage.getItem('token');
+    try {
+      var res = await http.post(Uri.parse(baseUrl),
+          body: json.encode({
+            "id": adrId,
+          }),
+          headers: {
+            "Content-Type": "application/json; charset=UTF-8",
+            'Authorization': "token $token"
+          });
+      var data = json.decode(res.body) as Map;
+
+      if (res.statusCode == 200) {
+        return getAddressData();
+      }
+      return Future.error("Error Fetching Data !");
+    } catch (e) {
+      print("e addtoCart");
+      print(e);
+
+      return Future.error("Error Fetching Data !");
+    }
+  }
 }

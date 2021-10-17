@@ -4,6 +4,7 @@ import 'package:provider/single_child_widget.dart';
 import 'package:uiecom/Backend/Bloc_Pattern/Authr/Login/userlogin_bloc.dart';
 import 'package:uiecom/Backend/Bloc_Pattern/Authr/Register/register_bloc.dart';
 import 'package:uiecom/Backend/Bloc_Pattern/Authr/auth/userauthenticate_bloc.dart';
+import 'package:uiecom/Backend/Bloc_Pattern/Order/bloc/orderpage_bloc.dart';
 import 'package:uiecom/Backend/Bloc_Pattern/Porf_Address/Address/address_bloc.dart';
 import 'package:uiecom/Backend/Bloc_Pattern/Porf_Address/Profile/profile_bloc.dart';
 import 'package:uiecom/Backend/Bloc_Pattern/Product/ProdwithCart/prodwithcart_bloc.dart';
@@ -21,6 +22,7 @@ class MainBloc {
       BlocProvider(create: (ctx) => CartpBloc()),
       BlocProvider(create: (ctx) => ProfileBloc()),
       BlocProvider(create: (ctx) => AddressBloc()),
+      BlocProvider(create: (ctx) => OrderpageBloc()),
     ];
   }
 }

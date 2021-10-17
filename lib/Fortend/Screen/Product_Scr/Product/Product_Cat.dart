@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:uiecom/AFile/Scr/Steper/myOrder.dart';
 
 import 'package:uiecom/Backend/Bloc_Pattern/Product/ProdwithCart/prodwithcart_bloc.dart';
 import 'package:uiecom/Fortend/Screen/Authr_Scr/HomeScr.dart';
@@ -10,6 +11,7 @@ import 'package:uiecom/Fortend/Widget/Resuable%20Code/Form/Btn.dart';
 import 'package:uiecom/Fortend/Widget/Resuable%20Code/Image_C.dart';
 
 import 'Product_details.dart';
+import 'prodList.dart';
 
 class ProductGridScr extends StatefulWidget {
   static const routeName = '/grid-product-screens';
@@ -34,12 +36,10 @@ class _ProductGridScrState extends State<ProductGridScr> {
   Widget build(BuildContext context) {
     return BlocConsumer<ProdwithcartBloc, ProdwithcartState>(
         listener: (context, state) {
-      // print('THis is ProductAdded State $state');
       if (state is ProdAddedCartState) {
         Navigator.of(context).pushReplacementNamed(ProductGridScr.routeName);
       }
     }, builder: (context, state) {
-      // print("produc page state: $state");
       if (state is ProductCartLoadingState) {
         return Center(child: CircularProgressIndicator());
       }
@@ -60,6 +60,7 @@ class _ProductGridScrState extends State<ProductGridScr> {
         return ProdScrOne(
           cartState: state.cartData,
           prodState: state.productData,
+          adrState: state.adrData,
         );
       }
       return Scaffold(
@@ -99,145 +100,128 @@ class ProdScrOne extends StatelessWidget {
             cartState.length.toString(),
           ),
         ),
-        body: SafeArea(
-          bottom: false,
-          left: true,
-          right: true,
-          top: false,
-          child: ProdGridList(
-            prodState: prodState,
-            cartState: cartState,
-            adrState: adrState,
-          ),
-        ));
+        body: ProductListScreens(
+            prodNumber: prodState, cartNumber: cartState, adrNumber: adrState));
   }
 }
 
 /* -------------------------------------------------------------------------- */
 /*                           // ! PRODUCT GRID  LIST                          */
-/* -------------------------------------------------------------------------- */
-class ProdGridList extends StatelessWidget {
-  dynamic cartState;
-  dynamic prodState;
-  dynamic adrState;
-  ProdGridList({Key? key, this.prodState, this.cartState, this.adrState})
-      : super(key: key);
+// /* -------------------------------------------------------------------------- */
+// class ProdGridList extends StatelessWidget {
+//   dynamic cartState;
+//   dynamic prodState;
+//   dynamic adrState;
+//   ProdGridList({Key? key, this.prodState, this.cartState, this.adrState})
+//       : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: GridView.builder(
-          shrinkWrap: true,
-          itemCount: prodState.length,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 0.60,
-            // crossAxisSpacing: 20,
-            //   mainAxisSpacing: 20
-          ),
-          padding: EdgeInsets.symmetric(horizontal: 20.0),
-          itemBuilder: (context, index) {
-            // print(cartState.length);
+//   @override
+//   Widget build(BuildContext context) {
+//     return Column(children: [
+//       Flexible(
+//         child: GridView.builder(
+//             shrinkWrap: true,
+//             physics: NeverScrollableScrollPhysics(),
+//             itemCount: prodState.length,
+//             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+//               crossAxisCount: 2,
+//               childAspectRatio: 0.65,
+//             ),
+//             padding: EdgeInsets.symmetric(horizontal: 20.0),
+//             itemBuilder: (context, index) {
+//               return ProdGridListShow(
+//                   prodNumber: prodState[index],
+//                   cartNumber: cartState,
+//                   adrNumber: adrState);
+//             }),
+//       ),
+//     ]);
+//   }
+// }
 
-            return ProdGridListShow(
-                prodNumber: prodState[index],
-                cartNumber: cartState,
-                adrNumber: adrState);
-          }),
-    );
-  }
-}
+// /* -------------------------------------------------------------------------- */
+// /*                         // ! PRODUCT GRID LIST SHOW                        */
+// /* -------------------------------------------------------------------------- */
+// class ProdGridListShow extends StatelessWidget {
+//   dynamic prodNumber;
+//   List? cartNumber;
+//   dynamic adrNumber;
+//   ProdGridListShow({Key? key, this.prodNumber, this.cartNumber, this.adrNumber})
+//       : super(key: key);
 
-/* -------------------------------------------------------------------------- */
-/*                         // ! PRODUCT GRID LIST SHOW                        */
-/* -------------------------------------------------------------------------- */
-class ProdGridListShow extends StatelessWidget {
-  dynamic prodNumber;
-  List? cartNumber;
-  dynamic adrNumber;
-  ProdGridListShow({Key? key, this.prodNumber, this.cartNumber, this.adrNumber})
-      : super(key: key);
-
-  // cartFun() {
-  //   for (var p in cartNumber) {
-  //     print(p);
-  //   }
-  // }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(10.0),
-      child: SizedBox(
-        width: 180.0,
-        child: Wrap(
-          children: <Widget>[
-            // Image.network(prodNumber.pic == null ? '' : prodNumber.pic),
-            // ! PRODUCT PIC
-            MultiplePic(prodNumber.pic == null ? '' : prodNumber.pic),
-            // ! END PRODUCT PIC
-            ListTile(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            // ! add PRODUCT ITEM DEIALS
-                            ProductDetailScr(
-                                prodNumber: prodNumber,
-                                cartNumber: cartNumber)));
-              },
-              title: Text(
-                prodNumber.title,
-                // title,
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              subtitle: Text(
-                prodNumber.description,
-                // subTitle,
-                style: TextStyle(fontSize: 12.0),
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                FBtn(
-                  cartNumber!.any((e) => e.product!.id!
-                              .contains(prodNumber.id.toString())) ==
-                          false
-                      ? 'acart'
-                      : 'gcart',
-                  submitMethod: () {
-                    // // ! PRODUCT DOES'NT EXIST IN CART
-                    if (cartNumber!.any((e) => e.product!.id!
-                            .contains(prodNumber.id.toString())) ==
-                        false) {
-                      BlocProvider.of<ProdwithcartBloc>(context)
-                        ..add(ProdAddedCartEvent(
-                            productId: prodNumber.id, quantity: 1));
-                    } // ! PRODUCT  EXIST IN CART
-                    else {
-                      Navigator.of(context)
-                          .pushReplacementNamed(CartScr.routeName);
-                    }
-                  },
-                ),
-                FBtn('Buy', submitMethod: () {
-                  // Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //         builder: (context) =>
-                  //             // ! add PRODUCT ITEM DEIALS
-                  //             OrderStrp(
-                  //                 prodNumber: prodNumber,
-                  //                 cartNumber: cartNumber,
-                  //                 adrNumber: adrNumber)));
-                })
-              ],
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       padding: EdgeInsets.all(10.0),
+//       child: SizedBox(
+//         width: 200.0,
+//         child: Wrap(
+//           children: <Widget>[
+//             // ! PRODUCT PIC
+//             MultiplePic(prodNumber.pic == null ? '' : prodNumber.pic),
+//             // ! END PRODUCT PIC
+//             ListTile(
+//               onTap: () {
+//                 Navigator.push(
+//                     context,
+//                     MaterialPageRoute(
+//                         builder: (context) =>
+//                             // ! add PRODUCT ITEM DEIALS
+//                             ProductDetailScr(
+//                                 prodNumber: prodNumber,
+//                                 cartNumber: cartNumber)));
+//               },
+//               title: Text(
+//                 prodNumber.title,
+//                 // title,
+//                 style: TextStyle(fontWeight: FontWeight.bold),
+//               ),
+//               subtitle: Text(
+//                 prodNumber.description,
+//                 // subTitle,
+//                 style: TextStyle(fontSize: 12.0),
+//               ),
+//             ),
+//             Row(
+//               mainAxisAlignment: MainAxisAlignment.start,
+//               children: [
+//                 FBtn(
+//                   cartNumber!.any((e) => e.product!.id!
+//                               .contains(prodNumber.id.toString())) ==
+//                           false
+//                       ? 'acart'
+//                       : 'gcart',
+//                   submitMethod: () {
+//                     // // ! PRODUCT DOES'NT EXIST IN CART
+//                     if (cartNumber!.any((e) => e.product!.id!
+//                             .contains(prodNumber.id.toString())) ==
+//                         false) {
+//                       BlocProvider.of<ProdwithcartBloc>(context)
+//                         ..add(ProdAddedCartEvent(
+//                             productId: prodNumber.id, quantity: 1));
+//                     } // ! PRODUCT  EXIST IN CART
+//                     else {
+//                       Navigator.of(context)
+//                           .pushReplacementNamed(CartScr.routeName);
+//                     }
+//                   },
+//                 ),
+//                 FBtn('Buy', submitMethod: () {
+//                   // Navigator.push(
+//                   //     context,
+//                   //     MaterialPageRoute(
+//                   //         builder: (context) =>
+//                   //             // ! add PRODUCT ITEM DEIALS
+//                   //             MyOrder(
+//                   //                 prodNumber: prodNumber,
+//                   //                 cartNumber: cartNumber,
+//                   //                 adrNumber: adrNumber)));
+//                 })
+//               ],
+//             )
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }

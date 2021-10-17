@@ -83,3 +83,11 @@ class AddressUpBtnEvent extends AddressEvent {
   String toString() =>
       'AddressUpdateBtnPressed { username: $fullname, password: $email }';
 }
+
+class AddressDel extends AddressEvent {
+  final String adrId;
+
+  AddressDel({required this.adrId});
+  @override
+  List<Object> get props => [adrId];
+}

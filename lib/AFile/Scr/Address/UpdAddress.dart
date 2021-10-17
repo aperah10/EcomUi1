@@ -7,6 +7,7 @@ import 'package:uiecom/Backend/Bloc_Pattern/Porf_Address/Address/address_bloc.da
 import 'package:uiecom/Fortend/Widget/Resuable%20Code/Drop_Down_C.dart';
 import 'package:uiecom/Fortend/Widget/Resuable%20Code/Form/AllFormField.dart';
 import 'package:uiecom/Fortend/Widget/Resuable%20Code/Form/AllFormValidation.dart';
+import 'package:uiecom/Fortend/Widget/Resuable%20Code/Form/Btn.dart';
 import 'package:uiecom/ZExtra/DataList.dart';
 
 import 'ShowAddress.dart';
@@ -128,198 +129,173 @@ class _UpAddressScreenState extends State<UpAddressScreen> {
 
     return SingleChildScrollView(
       child: Container(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Form(
-            key: _form,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                // ! Name EditFormFields
-                EditFormFields(
-                  formValidator: (String? val) => formvalid.reqValid(val),
-                  initValue: widget.adrNumber.fullname.toString().isNotEmpty
-                      ? widget.adrNumber.fullname
-                      : '',
-                  placeholder: 'Name',
-                  inputType: TextInputType.name,
-                  // controller: nameController,
-                  savedValue: (String? newValue) {
-                    // ! DROP DOWN MENU  dropdownValue
-                    setState(() {
-                      // nameSaved = newValue;
-                      // nameController.text = nameSaved;
-                      nameController.text = newValue!;
-                    });
-                  },
-                ),
-                // ! PHONE field
-                EditFormFields(
-                  formValidator: (String? val) =>
-                      formvalid.mobileValidator(val),
-                  initValue: widget.adrNumber.phone.toString().isNotEmpty
-                      ? widget.adrNumber.phone
-                      : '',
-                  placeholder: 'Phone',
-                  inputType: TextInputType.phone,
-                  // controller: phoneController,
-                  savedValue: (String? newValue) {
-                    // ! DROP DOWN MENU  dropdownValue
-                    setState(() {
-                      // phoneSaved = newValue;
-                      // phoneController.text = phoneSaved;
-                      phoneController.text = newValue!;
-                    });
-                  },
-                ),
+        child: Form(
+          key: _form,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              // ! Name EditFormFields
+              EditFormFields(
+                formValidator: (String? val) => formvalid.reqValid(val),
+                initValue: widget.adrNumber.fullname.toString().isNotEmpty
+                    ? widget.adrNumber.fullname
+                    : '',
+                placeholder: 'Name',
+                inputType: TextInputType.name,
+                savedValue: (String? newValue) {
+                  // ! DROP DOWN MENU  dropdownValue
+                  setState(() {
+                    nameController.text = newValue!;
+                  });
+                },
+              ),
+              // ! PHONE field
+              EditFormFields(
+                formValidator: (String? val) => formvalid.mobileValidator(val),
+                initValue: widget.adrNumber.phone.toString().isNotEmpty
+                    ? widget.adrNumber.phone
+                    : '',
+                placeholder: 'Phone',
+                inputType: TextInputType.phone,
+                // controller: phoneController,
+                savedValue: (String? newValue) {
+                  // ! DROP DOWN MENU  dropdownValue
+                  setState(() {
+                    phoneController.text = newValue!;
+                  });
+                },
+              ),
 
-                // ! Email field
-                EditFormFields(
-                  formValidator: (String? val) => formvalid.emailVal2(val),
-                  placeholder: 'Email',
-                  inputType: TextInputType.emailAddress,
-                  // controller: emailController,
-                  initValue: widget.adrNumber.email.toString().isNotEmpty
-                      ? widget.adrNumber.email
-                      : '',
-                  savedValue: (String? newValue) {
-                    // ! DROP DOWN MENU  dropdownValue
-                    setState(() {
-                      // emailSaved = newValue;
-                      // emailController.text = emailSaved;
-                      emailController.text = newValue!;
-                    });
-                  },
-                ),
+              // ! Email field
+              EditFormFields(
+                formValidator: (String? val) => formvalid.emailVal2(val),
+                placeholder: 'Email',
+                inputType: TextInputType.emailAddress,
+                initValue: widget.adrNumber.email.toString().isNotEmpty
+                    ? widget.adrNumber.email
+                    : '',
+                savedValue: (String? newValue) {
+                  // ! DROP DOWN MENU  dropdownValue
+                  setState(() {
+                    emailController.text = newValue!;
+                  });
+                },
+              ),
 
-                // ! House field
-                EditFormFields(
-                  placeholder: 'house',
-                  inputType: TextInputType.name,
-                  // controller: houseController,
-                  initValue: widget.adrNumber.house.toString().isNotEmpty
-                      ? widget.adrNumber.house
-                      : '',
-                  savedValue: (String? newValue) {
-                    // ! DROP DOWN MENU  dropdownValue
-                    setState(() {
-                      // houseSaved = newValue;
-                      // houseController.text = houseSaved;
-                      houseController.text = newValue!;
-                    });
-                  },
-                ),
-                // ! Address field
-                EditFormFields(
-                  placeholder: 'Trade',
-                  inputType: TextInputType.name,
-                  // controller: tradeController,
-                  initValue: widget.adrNumber.trade.toString().isNotEmpty
-                      ? widget.adrNumber.trade
-                      : '',
-                  savedValue: (String? newValue) {
-                    // ! DROP DOWN MENU  dropdownValue
-                    setState(() {
-                      // tradeSaved = newValue;
-                      // tradeController.text = tradeSaved;
-                      tradeController.text = newValue!;
-                    });
-                  },
-                ),
+              // ! House field
+              EditFormFields(
+                placeholder: 'house',
+                inputType: TextInputType.name,
+                initValue: widget.adrNumber.house.toString().isNotEmpty
+                    ? widget.adrNumber.house
+                    : '',
+                savedValue: (String? newValue) {
+                  // ! DROP DOWN MENU  dropdownValue
+                  setState(() {
+                    houseController.text = newValue!;
+                  });
+                },
+              ),
+              // ! Address field
+              EditFormFields(
+                placeholder: 'Trade',
+                inputType: TextInputType.name,
+                initValue: widget.adrNumber.trade.toString().isNotEmpty
+                    ? widget.adrNumber.trade
+                    : '',
+                savedValue: (String? newValue) {
+                  // ! DROP DOWN MENU  dropdownValue
+                  setState(() {
+                    tradeController.text = newValue!;
+                  });
+                },
+              ),
 
-                // ! City field
-                EditFormFields(
-                  formValidator: (String? val) => formvalid.reqValid(val),
-                  inputType: TextInputType.name,
-                  placeholder: 'City',
-                  // controller: cityController,
-                  initValue: widget.adrNumber.city.toString().isNotEmpty
-                      ? widget.adrNumber.city
-                      : '',
-                  savedValue: (String? newValue) {
-                    // ! DROP DOWN MENU  dropdownValue
-                    setState(() {
-                      // citySaved = newValue;
-                      // cityController.text = citySaved;
-                      cityController.text = newValue!;
-                    });
-                  },
-                ),
+              // ! City field
+              EditFormFields(
+                formValidator: (String? val) => formvalid.reqValid(val),
+                inputType: TextInputType.name,
+                placeholder: 'City',
+                initValue: widget.adrNumber.city.toString().isNotEmpty
+                    ? widget.adrNumber.city
+                    : '',
+                savedValue: (String? newValue) {
+                  // ! DROP DOWN MENU  dropdownValue
+                  setState(() {
+                    cityController.text = newValue!;
+                  });
+                },
+              ),
 
-                // ! City field
-                EditFormFields(
-                  inputType: TextInputType.name,
-                  placeholder: 'Area',
-                  // controller: areaController,
-                  initValue: widget.adrNumber.area.toString().isNotEmpty
-                      ? widget.adrNumber.area
-                      : '',
-                  savedValue: (String? newValue) {
-                    // ! DROP DOWN MENU  dropdownValue
-                    setState(() {
-                      // areaSaved = newValue;
-                      // areaController.text = areaSaved;
-                      areaController.text = newValue!;
-                    });
-                  },
-                ),
+              // ! City field
+              EditFormFields(
+                inputType: TextInputType.name,
+                placeholder: 'Area',
+                initValue: widget.adrNumber.area.toString().isNotEmpty
+                    ? widget.adrNumber.area
+                    : '',
+                savedValue: (String? newValue) {
+                  // ! DROP DOWN MENU  dropdownValue
+                  setState(() {
+                    areaController.text = newValue!;
+                  });
+                },
+              ),
 
-                // ! POSTTAL field
-                EditFormFields(
-                  formValidator: (String? val) =>
-                      formvalid.postalCodeValid(val),
-                  inputType: TextInputType.number,
-                  placeholder: 'PostalCode',
-                  initValue: widget.adrNumber.pinCode.toString().isNotEmpty
-                      ? widget.adrNumber.pinCode
-                      : '',
-                  savedValue: (String? newValue) {
-                    // ! DROP DOWN MENU  dropdownValue
-                    setState(() {
-                      pinCodeController.text = newValue!;
-                    });
-                  },
-                ),
+              // ! POSTTAL field
+              EditFormFields(
+                formValidator: (String? val) => formvalid.postalCodeValid(val),
+                inputType: TextInputType.number,
+                placeholder: 'PostalCode',
+                initValue: widget.adrNumber.pinCode.toString().isNotEmpty
+                    ? widget.adrNumber.pinCode
+                    : '',
+                savedValue: (String? newValue) {
+                  // ! DROP DOWN MENU  dropdownValue
+                  setState(() {
+                    pinCodeController.text = newValue!;
+                  });
+                },
+              ),
 
-                // ! DROP DOWN FOR STATE_LIST
-                DropDownBtn(
-                  formValidator: (String? val) => formvalid.reqValid(val),
-                  pageName: 'State',
-                  dName: widget.adrNumber.state.toString().isNotEmpty
-                      ? widget.adrNumber.state
-                      : 'State',
-                  listData: AllListData.stateData,
-                  listController: stateController,
-                  currentItem: widget.adrNumber.state.toString().isNotEmpty
-                      ? widget.adrNumber.state
-                      : null,
-                ),
+              // ! DROP DOWN FOR STATE_LIST
+              DropDownBtn(
+                formValidator: (String? val) => formvalid.reqValid(val),
+                pageName: 'State',
+                dName: widget.adrNumber.state.toString().isNotEmpty
+                    ? widget.adrNumber.state
+                    : 'State',
+                listData: AllListData.stateData,
+                listController: stateController,
+                currentItem: widget.adrNumber.state.toString().isNotEmpty
+                    ? widget.adrNumber.state
+                    : null,
+              ),
 
-                // ! DELIVEY TIME
-                DropDownBtn(
-                  dName: widget.adrNumber.delTime.toString().isNotEmpty
-                      ? widget.adrNumber.delTime
-                      : 'Delivery Time',
-                  pageName: 'Delivery Time',
-                  listData: AllListData.deliveryData,
-                  listController: delTimeController,
-                  currentItem: widget.adrNumber.delTime.toString().isNotEmpty
-                      ? widget.adrNumber.delTime
-                      : null,
-                ),
+              // ! DELIVEY TIME
+              DropDownBtn(
+                dName: widget.adrNumber.delTime.toString().isNotEmpty
+                    ? widget.adrNumber.delTime
+                    : 'Delivery Time',
+                pageName: 'Delivery Time',
+                listData: AllListData.deliveryData,
+                listController: delTimeController,
+                currentItem: widget.adrNumber.delTime.toString().isNotEmpty
+                    ? widget.adrNumber.delTime
+                    : null,
+              ),
 
-                // Login Button
-                Padding(
-                  padding: EdgeInsets.only(top: 30.0, bottom: 0.0),
-                  child: widget.adrState is AddressLoadingState
-                      ? CupertinoActivityIndicator()
-                      : PlaceBtn(
-                          'Save',
-                          submitMethod: _upaddressBtn,
-                        ),
-                ),
-              ],
-            ),
+              // Login Button
+              Padding(
+                padding: EdgeInsets.only(top: 30.0, bottom: 0.0),
+                child: widget.adrState is AddressLoadingState
+                    ? CupertinoActivityIndicator()
+                    : FBtn(
+                        'Save',
+                        submitMethod: _upaddressBtn,
+                      ),
+              ),
+            ],
           ),
         ),
       ),

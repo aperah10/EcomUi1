@@ -3,6 +3,8 @@ import 'package:uiecom/AFile/Scr/Address/ShowAddress.dart';
 import 'package:uiecom/AFile/Scr/Cart/CartPage.dart';
 import 'package:uiecom/AFile/Scr/Order/Order.dart';
 import 'package:uiecom/AFile/Scr/Profile/ShowProdile.dart';
+import 'package:uiecom/AFile/Scr/Steper/myOrder.dart';
+import 'package:uiecom/AFile/Scr/Steper/strp.dart';
 import 'package:uiecom/Fortend/Screen/Product_Scr/Cart/Cart.dart';
 import 'package:uiecom/Fortend/Screen/Product_Scr/Product/ProdPage.dart';
 import 'package:uiecom/Fortend/Screen/Product_Scr/Product/Product_Cat.dart';
@@ -32,15 +34,8 @@ class _MyDrawerListState extends State<MyDrawerList> {
             icon: Icons.price_check,
             submitMethod: () => ProductGridScr()),
 
-        CusDrawerList(
-            title: 'Cart Scr',
-            icon: Icons.price_check,
-            submitMethod: () => CartScr()),
-
-        CusDrawerList(
-            title: 'Address',
-            icon: Icons.price_check,
-            submitMethod: () => AddressShowScr()),
+        
+        
       ])),
     );
   }

@@ -11,7 +11,7 @@ part 'address_state.dart';
 class AddressBloc extends Bloc<AddressEvent, AddressState> {
   //  orc Adding Repo for data logic
 
-  AddressDataRespo addRespo = AddressDataRespo();
+  AddressDataRespo adrRespo = AddressDataRespo();
 
   AddressBloc() : super(AddressInitial());
 
@@ -24,7 +24,7 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
       yield AddressLoadingState();
 
       try {
-        List<Address> addressData = await addRespo.getAddressData();
+        List<Address> addressData = await adrRespo.getAddressData();
 
         yield AddressLoadedState(
           addressData: addressData,
@@ -39,7 +39,7 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
     /* -------------------------------------------------------------------------- */
     if (event is AddressSaveBtnEvent) {
       // print('Address Save button  Happend');
-      List<Address> addrList = await addRespo.addAddressData(
+      List<Address> addrList = await adrRespo.addAddressData(
           fullname: event.fullname,
           email: event.email,
           phone: event.phone,
@@ -60,7 +60,7 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
     /* -------------------------------------------------------------------------- */
     if (event is AddressUpBtnEvent) {
       // print('Address update tEvent Happend');
-      List<Address> adrList = await addRespo.upAddressData(
+      List<Address> adrList = await adrRespo.upAddressData(
           id: event.id,
           fullname: event.fullname,
           email: event.email,
@@ -75,6 +75,17 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
 
       // print(adrList.);
       yield AddressSuccessState();
+    }
+
+    /* -------------------------------------------------------------------------- */
+    /*                           // ! Address DELTING                           */
+    /* -------------------------------------------------------------------------- */
+    if (event is AddressDel) {
+      List<Address> adrList = await adrRespo.adrDel(
+        adrId: event.adrId,
+      );
+
+      yield AddressDelState(cartItems: adrList);
     }
   }
 }

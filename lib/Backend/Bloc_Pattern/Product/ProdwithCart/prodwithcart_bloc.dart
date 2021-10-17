@@ -5,7 +5,9 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:uiecom/Backend/Models/Cart/New_Cartm.dart';
 import 'package:uiecom/Backend/Models/Product/New_Product_m.dart';
+import 'package:uiecom/Backend/Models/Prof_Address/Addressm.dart';
 import 'package:uiecom/Backend/Respo/Product/ProdRespo.dart';
+import 'package:uiecom/Backend/Respo/Prof_Address/AddressRespo.dart';
 import 'package:uiecom/Backend/Respo/RCLS/Cart/CartRespo.dart';
 
 part 'prodwithcart_event.dart';
@@ -15,7 +17,7 @@ class ProdwithcartBloc extends Bloc<ProdwithcartEvent, ProdwithcartState> {
   // ! Adding Repo for data logic
   CartDataRespo cartRespo = CartDataRespo();
   ProductDataRespo prodRespo = ProductDataRespo();
-  // AddressDataRespo addRespo = AddressDataRespo();
+  AddressDataRespo adrRespo = AddressDataRespo();
 
   ProdwithcartBloc() : super(ProdwithcartInitial());
 
@@ -30,10 +32,12 @@ class ProdwithcartBloc extends Bloc<ProdwithcartEvent, ProdwithcartState> {
       try {
         List<ProductC> productData = await prodRespo.getProduct();
         List<NewCart> cartData = await cartRespo.getCartData();
-        print(productData);
+        List<Address> adrData = await adrRespo.getAddressData();
+
         yield ProductCartLoadedState(
           productData: productData,
           cartData: cartData,
+          adrData: adrData,
         );
       } catch (e) {
         yield ProductCartErrorState(message: e.toString());
@@ -50,15 +54,14 @@ class ProdwithcartBloc extends Bloc<ProdwithcartEvent, ProdwithcartState> {
     if (event is ProdAddedCartEvent) {
       List<NewCart> prodList = await cartRespo.addCartData(
           productId: event.productId, quantity: event.quantity);
-      // print('RESULT  OF ADDTOCART :- $prodList');
+
       yield ProdAddedCartState(cartItems: prodList);
     }
     if (event is ProdDeleteCartEvent) {
-      // print('ProdDeleteCartEvent Happend');
       List<NewCart> prodList = await cartRespo.delCartData(
         productId: event.productId,
       );
-      // print('RESULT  OF ADDTOCART :- $prodList');
+
       yield ProdDeletingCartState(cartItems: prodList);
     }
   }

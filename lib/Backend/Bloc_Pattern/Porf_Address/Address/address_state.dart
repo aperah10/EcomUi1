@@ -38,3 +38,11 @@ class AddressErrorState extends AddressState {
   @override
   String toString() => 'AddressFailure(error: $error)';
 }
+
+class AddressDelState extends AddressState {
+  List<Address> cartItems;
+
+  AddressDelState({required this.cartItems});
+  @override
+  List<Object> get props => [];
+}

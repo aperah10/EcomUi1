@@ -18,10 +18,11 @@ class ProductCartLoadingState extends ProdwithcartState {
 class ProductCartLoadedState extends ProdwithcartState {
   List<ProductC> productData;
   List<NewCart>? cartData;
-
+  List<Address>? adrData;
   ProductCartLoadedState({
     required this.productData,
     this.cartData,
+    this.adrData,
   });
 
   @override

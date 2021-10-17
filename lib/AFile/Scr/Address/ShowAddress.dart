@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uiecom/AFile/Scr/Order/OrderWid.dart';
 import 'package:uiecom/Backend/Bloc_Pattern/Porf_Address/Address/address_bloc.dart';
 import 'package:uiecom/Fortend/Widget/Appbar/CusAppbar.dart';
+import 'package:uiecom/Fortend/Widget/Resuable%20Code/Form/Btn.dart';
+import 'package:uiecom/Fortend/Widget/Resuable%20Code/Form/Buttons_C.dart';
 
 import 'EditAddress.dart';
 import 'UpdAddress.dart';
@@ -13,44 +15,24 @@ class AddressShowScr extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(
-        titleName: 'Address Page ',
-        act: [Icon(Icons.add)],
-      ),
-      body: SafeArea(
-        bottom: false,
-        left: true,
-        right: true,
-        top: false,
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            children: [
-              Container(
-                width: double.infinity,
-                height: 50,
-                child: Card(
-                    child: InkWell(
-                        onTap: () {
-                          Navigator.of(context)
-                              .pushReplacementNamed(AddressPostScr.routeName);
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
-                          child: Text('Add New Address',
-                              style: TextStyle(fontSize: 18)),
-                        ))),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 30.0),
-                child: Address1(),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+    return
+        //  Scaffold(
+        //   appBar: CustomAppBar(
+        //     titleName: 'Address Page ',
+        //     act: [Icon(Icons.add)],
+        //   ),
+        //   body:
+        SafeArea(
+            bottom: false,
+            left: true,
+            right: true,
+            top: false,
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Address1(),
+            ));
+    // ),
+    // );
   }
 }
 
@@ -87,19 +69,18 @@ class _Address1State extends State<Address1> {
         if (state is AddressLoadingState) {
           Center(child: CircularProgressIndicator());
         }
+        if (state is AddressDelState) {
+          Navigator.of(context).pushReplacementNamed(AddressShowScr.routeName);
+        }
         if (state is AddressErrorState) {
           Center(child: Text(state.error.toString()));
         }
       },
       child: BlocBuilder<AddressBloc, AddressState>(builder: (context, state) {
         if (state is AddressLoadedState) {
-          return state.addressData.isNotEmpty
-              ? AddressShow(
-                  adrState: state.addressData,
-                )
-              : Center(
-                  child: Text('No Address'),
-                );
+          return AddressShow(
+            adrState: state.addressData,
+          );
         }
 
         return Center(child: CircularProgressIndicator());
@@ -130,37 +111,53 @@ class _AddressShowState extends State<AddressShow> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
         child: Column(
-          children: [
-           widget.adrState.isNotEmpty? Container(
-      decoration: BoxDecoration(
-            // ! Cricle Border
-            borderRadius: BorderRadius.circular(40),
-            border: Border(
-              bottom: BorderSide(color: Colors.white70),
-              top: BorderSide(color: Colors.white70),
-              left: BorderSide(color: Colors.white70),
-              right: BorderSide(color: Colors.white70),
-            ),
-      ),
-      child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: widget.adrState.length,
-              itemBuilder: (context, index) {
-                return RadioListTile(
-                  value: index,
-                  groupValue: gValue,
-                  onChanged: (ind) {
-                    setState(() {
-                      gValue = ind;
-                      idt = widget.adrState[index].id;
-                    });
+      children: [
+        // ! Name
+        Container(
+          width: double.infinity,
+          height: 50,
+          child: Card(
+              child: InkWell(
+                  onTap: () {
+                    Navigator.of(context)
+                        .pushReplacementNamed(AddressPostScr.routeName);
                   },
-                  title: AddressItem(adrNumber: widget.adrState[index]),
-                );
-              }),
-    ): Center(child: Text('No Address')
-          ],
-        ));
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child:
+                        Text('Add New Address', style: TextStyle(fontSize: 18)),
+                  ))),
+        ),
+        // ! end
+
+        widget.adrState.isNotEmpty
+            ? Column(
+                children: [
+                  ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: widget.adrState.length,
+                      itemBuilder: (context, index) {
+                        return RadioListTile(
+                          value: index,
+                          groupValue: gValue,
+                          onChanged: (ind) {
+                            setState(() {
+                              gValue = ind;
+                              idt = widget.adrState[index].id;
+                            });
+                          },
+                          title: AddressItem(adrNumber: widget.adrState[index]),
+                        );
+                      }),
+                ],
+              )
+            : Center(child: Text('No Address')),
+
+        // ! Name
+        // widget.adrState.isNotEmpty ? FBtn('Save') : Text('')
+        // ! end
+      ],
+    ));
   }
 }
 
@@ -171,7 +168,7 @@ class AddressItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(4),
+      margin: EdgeInsets.all(2),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(4)),
       ),
@@ -201,7 +198,6 @@ class AddressItem extends StatelessWidget {
                   ),
                 ],
               ),
-              // ${adrNumber.state}"
               Container(
                 child: Text(
                   "${adrNumber.house} , ${adrNumber.trade} ${adrNumber.trade} , ${adrNumber.city}\n ${adrNumber.state} ",
@@ -252,24 +248,17 @@ class AddressBtn extends StatelessWidget {
           Spacer(
             flex: 2,
           ),
-          MaterialButton(
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          // ! add PRODUCT ITEM DEIALS
-                          AddressUpScr(
-                            adrNumber: adrNumber,
-                          )));
-            },
-            child: Text(
-              "Edit / Change",
-              style: TextStyle(fontSize: 12, color: Colors.indigo.shade700),
-            ),
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-          ),
+          adrBtn("Edit /Change", submitMethod: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        // ! add PRODUCT ITEM DEIALS
+                        AddressUpScr(
+                          adrNumber: adrNumber,
+                        )));
+          }),
+
           Spacer(
             flex: 3,
           ),
@@ -281,18 +270,29 @@ class AddressBtn extends StatelessWidget {
           Spacer(
             flex: 3,
           ),
-          MaterialButton(
-            onPressed: () {},
-            child: Text("Add New Address",
-                style: TextStyle(fontSize: 12, color: Colors.indigo.shade700)),
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-          ),
+          // ! btn field
+          adrBtn("Remove", submitMethod: () {
+            // !adr DELETE
+            BlocProvider.of<AddressBloc>(context)
+              ..add(AddressDel(adrId: adrNumber.id.toString()));
+
+            // ! Address METHOD
+          }),
           Spacer(
             flex: 2,
           ),
         ],
       ),
+    );
+  }
+
+  Widget adrBtn(String btnName, {dynamic submitMethod}) {
+    return MaterialButton(
+      onPressed: submitMethod,
+      child: Text(btnName,
+          style: TextStyle(fontSize: 12, color: Colors.indigo.shade700)),
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent,
     );
   }
 }
