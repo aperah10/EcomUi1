@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uiecom/AFile/Scr/Address/EditAddress.dart';
 import 'package:uiecom/AFile/Scr/Address/ShowAddress.dart';
 import 'package:uiecom/AFile/Scr/Cart/CartPage.dart';
 import 'package:uiecom/AFile/Scr/Order/Order.dart';
@@ -33,9 +34,10 @@ class _MyDrawerListState extends State<MyDrawerList> {
             title: 'Product Grid Show',
             icon: Icons.price_check,
             submitMethod: () => ProductGridScr()),
-
-        
-        
+        CusDrawerList(
+            title: 'CartPage',
+            icon: Icons.price_check,
+            submitMethod: () => CartPage()),
       ])),
     );
   }

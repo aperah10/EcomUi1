@@ -30,7 +30,6 @@ class ProductDataRespo {
         List<ProductC> productData = mpt.productData;
         // // print(
         // //     '--------------------------------------------------------------------');
-        // print(productData);
 
         return productData;
       } else {

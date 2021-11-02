@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:uiecom/AFile/Scr/Order/OrderWid.dart';
 import 'package:uiecom/Backend/Bloc_Pattern/Porf_Address/Address/address_bloc.dart';
 import 'package:uiecom/Fortend/Widget/Appbar/CusAppbar.dart';
-import 'package:uiecom/Fortend/Widget/Resuable%20Code/Form/Btn.dart';
-import 'package:uiecom/Fortend/Widget/Resuable%20Code/Form/Buttons_C.dart';
-
-import 'EditAddress.dart';
 import 'UpdAddress.dart';
 
 class AddressShowScr extends StatelessWidget {
@@ -16,7 +11,7 @@ class AddressShowScr extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return
-        //  Scaffold(
+        // Scaffold(
         //   appBar: CustomAppBar(
         //     titleName: 'Address Page ',
         //     act: [Icon(Icons.add)],
@@ -31,7 +26,6 @@ class AddressShowScr extends StatelessWidget {
               padding: const EdgeInsets.all(20.0),
               child: Address1(),
             ));
-    // ),
     // );
   }
 }
@@ -113,21 +107,21 @@ class _AddressShowState extends State<AddressShow> {
         child: Column(
       children: [
         // ! Name
-        Container(
-          width: double.infinity,
-          height: 50,
-          child: Card(
-              child: InkWell(
-                  onTap: () {
-                    Navigator.of(context)
-                        .pushReplacementNamed(AddressPostScr.routeName);
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
-                    child:
-                        Text('Add New Address', style: TextStyle(fontSize: 18)),
-                  ))),
-        ),
+        // Container(
+        //   width: double.infinity,
+        //   height: 50,
+        //   child: Card(
+        //       child: InkWell(
+        //           onTap: () {
+        //             Navigator.of(context)
+        //                 .pushReplacementNamed(AddressPostScr.routeName);
+        //           },
+        //           child: Padding(
+        //             padding: const EdgeInsets.only(top: 8.0),
+        //             child:
+        //                 Text('Add New Address', style: TextStyle(fontSize: 18)),
+        //           ))),
+        // ),
         // ! end
 
         widget.adrState.isNotEmpty

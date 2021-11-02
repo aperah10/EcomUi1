@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uiecom/AFile/Scr/Steper/myOrder.dart';
+import 'package:uiecom/AFile/Scr/Steper/strp.dart';
 import 'package:uiecom/Backend/Bloc_Pattern/Product/ProdwithCart/prodwithcart_bloc.dart';
 import 'package:uiecom/Fortend/Screen/Product_Scr/Cart/Cart.dart';
 import 'package:uiecom/Fortend/Widget/Appbar/CusAppbar.dart';
@@ -33,13 +34,16 @@ class _ProductListScreensState extends State<ProductListScreens> {
                 ),
                 padding: EdgeInsets.symmetric(horizontal: 20.0),
                 itemBuilder: (context, index) {
-                  return dataOfListView(prodNumber: widget.prodNumber[index]);
+                  return dataOfListView(
+                      prodNumber: widget.prodNumber[index],
+                      adrNumber: widget.adrNumber);
                 }));
     // ));
   }
 
   dataOfListView({
     dynamic prodNumber,
+    dynamic adrNumber,
   }) {
     return new Container(
       padding: EdgeInsets.all(10.0),
@@ -58,7 +62,7 @@ class _ProductListScreensState extends State<ProductListScreens> {
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               subtitle: Text(
-                prodNumber.description,
+                prodNumber.discountPrice.toString(),
                 // subTitle,
                 style: TextStyle(fontSize: 12.0),
               ),
@@ -90,15 +94,19 @@ class _ProductListScreensState extends State<ProductListScreens> {
                 ),
                 Expanded(
                   child: FBtn('Buy', submitMethod: () {
+                    print(adrNumber);
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
                                 // ! add PRODUCT ITEM DEIALS
-                                MyOrder(
+                                Strper(
                                     prodNumber: prodNumber,
-                                    cartNumber: widget.cartNumber,
-                                    adrNumber: widget.adrNumber)));
+                                    adrNumber: adrNumber)));
+                    // MyOrder(
+                    //   prodNumber: prodNumber,
+                    //   adrNumber: adrNumber,
+                    // )));
                   }),
                 )
               ],

@@ -26,9 +26,9 @@ class MainProduct {
 /*                        // ! PRODUCT MODEL WITH DEPTH                       */
 /* -------------------------------------------------------------------------- */
 
-// Product productFromJson(String str) => Product.fromJson(json.decode(str));
+ProductC productCFromJson(String str) => ProductC.fromJson(json.decode(str));
 
-// String productToJson(Product data) => json.encode(data.toJson());
+String productCToJson(ProductC data) => json.encode(data.toJson());
 
 class ProductC {
   ProductC({
@@ -43,34 +43,40 @@ class ProductC {
     this.stock,
     this.pic,
     this.offers,
+    this.quantity,
+    this.ammount,
     this.uplod,
   });
 
   String? id;
   String? title;
   String? description;
-  int? salesPrice;
-  int? discountPrice;
-  int? ourPrice;
-  String? category;
+  double? salesPrice;
+  double? discountPrice;
+  double? ourPrice;
+  dynamic? category;
   DateTime? date;
   int? stock;
   String? pic;
   int? offers;
+  int? quantity;
+  int? ammount;
   Uplod? uplod;
 
   factory ProductC.fromJson(Map<String, dynamic> json) => ProductC(
         id: json["id"],
         title: json["title"],
         description: json["description"],
-        salesPrice: json["sales_price"],
-        discountPrice: json["discount_price"],
-        ourPrice: json["our_price"],
+        salesPrice: json["salesPrice"],
+        discountPrice: json["discountPrice"],
+        ourPrice: json["ourPrice"],
         category: json["category"],
         date: DateTime.parse(json["date"]),
         stock: json["stock"],
         pic: json["pic"],
         offers: json["offers"],
+        quantity: json["quantity"],
+        ammount: json["ammount"],
         uplod: Uplod.fromJson(json["uplod"]),
       );
 
@@ -78,14 +84,15 @@ class ProductC {
         "id": id,
         "title": title,
         "description": description,
-        "sales_price": salesPrice,
-        "discount_price": discountPrice,
-        "our_price": ourPrice,
+        "salesPrice": salesPrice,
+        "discountPrice": discountPrice,
+        "ourPrice": ourPrice,
         "category": category,
-        "date": date?.toIso8601String(),
         "stock": stock,
         "pic": pic,
         "offers": offers,
+        "quantity": quantity,
+        "ammount": ammount,
         "uplod": uplod?.toJson(),
       };
 }
@@ -95,28 +102,32 @@ class Uplod {
     this.id,
     this.phone,
     this.fullname,
-    this.countryCode,
     this.email,
+    this.isCustomer,
   });
 
   String? id;
+
   String? phone;
   String? fullname;
-  int? countryCode;
+
   String? email;
+
+  bool? isCustomer;
 
   factory Uplod.fromJson(Map<String, dynamic> json) => Uplod(
         id: json["id"],
         phone: json["phone"],
         fullname: json["fullname"],
-        countryCode: json["country_code"],
         email: json["email"],
+        isCustomer: json["isCustomer"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "phone": phone,
         "fullname": fullname,
-        "country_code": countryCode,
+        "email": email,
+        "isCustomer": isCustomer,
       };
 }

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:uiecom/AFile/Scr/Address/ShowAddress.dart';
 import 'package:uiecom/AFile/Scr/Order/OrderWid.dart';
+import 'package:uiecom/AFile/Scr/Steper/strp.dart';
 import 'package:uiecom/Backend/Bloc_Pattern/Porf_Address/Address/address_bloc.dart';
 import 'package:uiecom/Fortend/Widget/Appbar/CusAppbar.dart';
 import 'package:uiecom/Fortend/Widget/Resuable%20Code/Drop_Down_C.dart';
@@ -13,9 +14,23 @@ import 'package:uiecom/Fortend/Widget/Resuable%20Code/Form/Btn.dart';
 import 'package:uiecom/Fortend/Widget/Resuable%20Code/Form/Buttons_C.dart';
 import 'package:uiecom/ZExtra/DataList.dart';
 
-class AddressPostScr extends StatelessWidget {
+class AddressPostScr extends StatefulWidget {
   static const routeName = '/edit-address-post';
   AddressPostScr({Key? key}) : super(key: key);
+
+  @override
+  _AddressPostScrState createState() => _AddressPostScrState();
+}
+
+class _AddressPostScrState extends State<AddressPostScr> {
+  AddressBloc prodBloc = AddressBloc();
+
+  @override
+  void initState() {
+    prodBloc = BlocProvider.of<AddressBloc>(context);
+    prodBloc.add(FetchAddressEvent());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +41,7 @@ class AddressPostScr extends StatelessWidget {
         body: SafeArea(
           child: BlocListener<AddressBloc, AddressState>(
             listener: (context, state) {
+              // print('AState ${state}');
               if (state is AddressLoadingState) {
                 Center(child: CircularProgressIndicator());
               }
@@ -33,8 +49,7 @@ class AddressPostScr extends StatelessWidget {
                 Center(child: Text(state.error.toString()));
               }
               if (state is AddressSuccessState) {
-                Navigator.of(context)
-                    .pushReplacementNamed(AddressShowScr.routeName);
+                Navigator.of(context).pushReplacementNamed(Strper.routeName);
               }
             },
             child: BlocBuilder<AddressBloc, AddressState>(

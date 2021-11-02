@@ -2,8 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uiecom/AFile/Scr/Address/ShowAddress.dart';
 
+import 'myOrder.dart';
+
 class Strper extends StatefulWidget {
-  Strper({Key? key}) : super(key: key);
+  static const routeName = '/strp';
+  dynamic prodNumber;
+  dynamic cartNumber;
+  dynamic adrNumber;
+  Strper({Key? key, this.adrNumber, this.prodNumber, this.cartNumber})
+      : super(key: key);
 
   @override
   _StrperState createState() => _StrperState();
@@ -68,16 +75,10 @@ class _StrperState extends State<Strper> {
               isActive: curStep >= 1,
               title: const Text('Order'),
               subtitle: const Text('Delivery'),
-              content: Container(
-                child: Column(
-                  children: [
-                    Text('Quantity'),
-                    // OrderProductPage(
-                    //   prodNumber: widget.prodNumber,
-                    // ),
-                  ],
-                ),
-              ),
+              content: MyOrder(
+                  adrNumber: widget.adrNumber,
+                  prodNumber: widget.prodNumber,
+                  cartNumber: widget.cartNumber),
             ),
             Step(
               state: curStep > 2 ? StepState.complete : StepState.indexed,

@@ -4,6 +4,7 @@ import 'package:uiecom/AFile/Scr/Address/ShowAddress.dart';
 import 'package:uiecom/AFile/Scr/Address/UpdAddress.dart';
 import 'package:uiecom/AFile/Scr/Profile/EditProfile.dart';
 import 'package:uiecom/AFile/Scr/Profile/ShowProdile.dart';
+import 'package:uiecom/AFile/Scr/Steper/strp.dart';
 import 'package:uiecom/Fortend/Screen/Authr_Scr/HomeScr.dart';
 import 'package:uiecom/Fortend/Screen/Authr_Scr/Login.dart';
 import 'package:uiecom/Fortend/Screen/Authr_Scr/Register.dart';
@@ -23,4 +24,5 @@ final Map<String, WidgetBuilder> routes = {
   AddressShowScr.routeName: (ctx) => AddressShowScr(),
   AddressPostScr.routeName: (ctx) => AddressPostScr(),
   AddressUpScr.routeName: (ctx) => AddressUpScr(),
+  Strper.routeName: (ctx) => Strper(),
 };
